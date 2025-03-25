@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -18,15 +20,26 @@ namespace Business.Concrete
         {
             _schoolDal=schoolDal;
         }
-        public List<School> GetAll()
+        public IDataResult<List<School>> GetAll()
         {
-            return _schoolDal.GetAll();
+             
+             return new SuccessDataResult<List<School>>(_schoolDal.GetAll(), Messages.SchoolsListed);
         }
 
-        public School Add(School school)
+        public IDataResult<School> GetById(int schoolId)
         {
-            _schoolDal.Add(school);
-            return school;
+            return new DataResult<School>(_schoolDal.Get(s => s.Id == schoolId), true, Messages.SchoolListed);
+        }
+
+        public IResult Add(School school)
+        {
+            if (school.SchoolName.Length>=5)
+            {
+                _schoolDal.Add(school);
+                return new SuccessResult(Messages.SchoolAdded);
+            }
+
+            return new ErrorResult(Messages.SchoolNameInvalid);
         }
     }
 }

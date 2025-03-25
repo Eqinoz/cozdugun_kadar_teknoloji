@@ -22,6 +22,12 @@ namespace WebApi.Controllers
             var result = _schoolService.GetAll();
             return Ok(result);
         }
+        [HttpGet("GetId")]
+        public IActionResult Get(int id)
+        {
+            var result = _schoolService.GetById(id);
+            return Ok(result);
+        }
 
         [HttpPost]
         public IActionResult Post(School school)
