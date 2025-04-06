@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -18,21 +19,21 @@ namespace Business.Concrete
         {
             _child= childDal;
         }
-        public List<Child> GetChild()
+        public IDataResult<List<Child>> GetChild()
         {
-            return _child.GetAll();
+            return new SuccessDataResult<List<Child>>(_child.GetAll());
         }
 
-        public Child Add(Child child)
+        public IResult Add(Child child)
         {
             _child.Add(child);
-            return child;
+            return new SuccessResult("Başarılı");
         }
 
-        public List<ChildDetailsDto> GetChildDetails()
+        public IDataResult<List<ChildDetailsDto>> GetChildDetails()
         {
             var result = _child.ChildDetails();
-            return result;
+            return new SuccessDataResult<List<ChildDetailsDto>>(result,"Başarılı");
         }
     }
 }

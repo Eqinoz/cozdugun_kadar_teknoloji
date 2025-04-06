@@ -1,8 +1,19 @@
 
+using Autofac;
+using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
+using Business.DependencyResolvers.Autofac;
+using Core.Extensions;
+using Core.Utilities.IoC;
+using Core.Utilities.Security.Encryption;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace WebApi
 {
@@ -12,24 +23,52 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddScoped<ISchoolService, SchoolManager>();
-            builder.Services.AddScoped<ISchoolDal, EfSchoolDal>();
+            //builder.Services.AddScoped<ISchoolService, SchoolManager>();
+            //builder.Services.AddScoped<ISchoolDal, EfSchoolDal>();
 
-            builder.Services.AddScoped<IMissionTypeService, MissionTypeManager>();
-            builder.Services.AddScoped<IMissionTypeDal, EfMissionTypeDal>();
+            //builder.Services.AddScoped<IMissionTypeService, MissionTypeManager>();
+            //builder.Services.AddScoped<IMissionTypeDal, EfMissionTypeDal>();
 
-            builder.Services.AddScoped<IParentDal, EfParentDal>();
-            builder.Services.AddScoped<IParentService, ParentManager>();
+            //builder.Services.AddScoped<IParentDal, EfParentDal>();
+            //builder.Services.AddScoped<IParentService, ParentManager>();
 
-            builder.Services.AddScoped<IChildDal, EfChildDal>();
-            builder.Services.AddScoped<IChildService, ChildManager>();
+            //builder.Services.AddScoped<IChildDal, EfChildDal>();
+            //builder.Services.AddScoped<IChildService, ChildManager>();
 
             // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+
+                    };
+                });
+
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //Autofac Modülünü Aktif Etmek Ýçin
+            builder.Host.UseServiceProviderFactory(services => new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule(new AutofacBusinessModule());
+
+                });
 
             var app = builder.Build();
 

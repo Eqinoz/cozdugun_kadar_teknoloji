@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -30,7 +31,7 @@ namespace Business.Concrete
         {
             return new DataResult<School>(_schoolDal.Get(s => s.Id == schoolId), true, Messages.SchoolListed);
         }
-
+        [SecuredOperation("school.add,Admin")]
         public IResult Add(School school)
         {
             if (school.SchoolName.Length>=5)

@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
+using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -17,15 +22,29 @@ namespace Business.Concrete
         {
             _parentDal = parentDal;
         }
-        public List<Parent> GetParentList()
+        public IDataResult<List<Parent>> GetParentList()
         {
-            return _parentDal.GetAll();
+            var result = _parentDal.GetAll();
+            return new SuccessDataResult<List<Parent>>(result,"Başarılı");
         }
 
-        public Parent Add(Parent parent)
+        public IDataResult<Parent> GetParentByMail(string mail)
         {
+            var result = _parentDal.Get(x => x.Email == mail);
+            if (result!=null)
+            {
+                return new SuccessDataResult<Parent>(result);
+            }
+
+            return new ErrorDataResult<Parent>();
+        }
+
+        //[ValidationAspect(typeof(ParentValidator))]
+        public IResult Add(Parent parent)
+        {
+           
              _parentDal.Add(parent);
-            return parent;
+            return new SuccessResult();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,8 @@ namespace DataAccess.Concrete.EntityFramework
             );
         }
 
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Title> Titles { get; set; }
         public DbSet<Child> Children { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Mission> Missions { get; set; }
