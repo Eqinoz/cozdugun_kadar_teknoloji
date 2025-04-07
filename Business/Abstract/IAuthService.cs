@@ -19,6 +19,6 @@ namespace Business.Abstract
         IDataResult<Parent> ParentLogin(UserForLoginDto userForLoginDto);
 
         IResult UserExists(string email, string userType);
-        IDataResult<AccessToken> CreateAccessToken(Manager manager);
+        IDataResult<AccessToken> CreateAccessToken<TUser>(TUser user,string userType)where TUser:IAuth;
     }
 }

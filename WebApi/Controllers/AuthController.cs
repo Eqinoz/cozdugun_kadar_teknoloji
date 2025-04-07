@@ -16,7 +16,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("loginManager")]
-        public ActionResult Login(UserForLoginDto userForLoginDto)
+        public ActionResult LoginManager(UserForLoginDto userForLoginDto)
         {
             var userToLogin = _authService.ManagerLogin(userForLoginDto);
             if (!userToLogin.Success)
@@ -24,7 +24,7 @@ namespace WebApi.Controllers
                 return BadRequest(userToLogin);
             }
 
-            var result = _authService.CreateAccessToken(userToLogin.Data);
+            var result = _authService.CreateAccessToken(userToLogin.Data, "Manager");
             if (result.Success)
             {
                 return Ok(result);
@@ -34,12 +34,12 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("registerManager")]
-        public ActionResult Register(UserForRegisterDto userForRegister)
+        public ActionResult RegisterManager(UserForRegisterDto userForRegister)
         {
             var registerResult = _authService.ManagerRegister(userForRegister, userForRegister.Password);
             if (registerResult.Success)
             {
-                var result = _authService.CreateAccessToken(registerResult.Data);
+                var result = _authService.CreateAccessToken(registerResult.Data,"Manager");
                 if (result.Success)
                 {
                     return Ok(result.Data);
@@ -52,6 +52,41 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("registerParent")]
+        public IActionResult RegisterParent(UserForRegisterDto userForRegister)
+        {
+            var registerResult = _authService.ParentRegister(userForRegister, userForRegister.Password);
+            if (registerResult.Success)
+            {
+                var result = _authService.CreateAccessToken(registerResult.Data, "Parent");
+                if (result.Success)
+                {
+                    return Ok(result.Data);
+                }
+            }
+
+
+
+            return BadRequest(registerResult);
+        }
+
+        [HttpPost("loginParent")]
+        public IActionResult LoginParent(UserForLoginDto userForLogin)
+        {
+            var userToLogin = _authService.ParentLogin(userForLogin);
+            if (!userToLogin.Success)
+            {
+                return BadRequest(userToLogin);
+            }
+
+            var result = _authService.CreateAccessToken(userToLogin.Data, "Parent");
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
 
     }
 }

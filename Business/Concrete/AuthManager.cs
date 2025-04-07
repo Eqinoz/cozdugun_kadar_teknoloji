@@ -84,12 +84,51 @@ namespace Business.Concrete
 
         public IDataResult<Parent> ParentRegister(UserForRegisterDto parentForRegisterDto, string password)
         {
-            throw new NotImplementedException();
+            var emailCheck = UserExists(parentForRegisterDto.Mail, "Parent");
+            if (!emailCheck.Success)
+            {
+                return new ErrorDataResult<Parent>(emailCheck.Message);
+            }
+
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var parent = new Parent
+            {
+                FirstName = parentForRegisterDto.FirstName,
+                LastName = parentForRegisterDto.LastName,
+                Email = parentForRegisterDto.Mail,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Phone = parentForRegisterDto.Phone,
+                Statu = true,
+            };
+            var result = _parentService.Add(parent);
+            if (result.Success)
+            {
+                return new SuccessDataResult<Parent>(parent, result.Message);
+            }
+
+            return new ErrorDataResult<Parent>(result.Message);
+
         }
 
         public IDataResult<Parent> ParentLogin(UserForLoginDto userForLoginDto)
         {
-            throw new NotImplementedException();
+            var emailCheck = _parentService.GetParentByMail(userForLoginDto.Email);
+            if (!emailCheck.Success)
+            {
+                return new ErrorDataResult<Parent>("Kullanıcı Kayıtlı Değil");
+            }
+
+
+
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, emailCheck.Data.PasswordHash,
+                    emailCheck.Data.PasswordSalt))
+            {
+                return new ErrorDataResult<Parent>(Messages.PasswordError);
+            }
+
+            return new SuccessDataResult<Parent>(emailCheck.Data, Messages.SuccessfullLogin);
         }
 
         public IResult UserExists(string email, string userType)
@@ -116,11 +155,30 @@ namespace Business.Concrete
 
         }
 
-        public IDataResult<AccessToken> CreateAccessToken(Manager manager)
+        public IDataResult<AccessToken> CreateAccessToken<TUser>(TUser user, string userType)where TUser:IAuth
         {
-            var claims = _managerService.GetTitle(manager);
-            var accessToken = _tokenHelper.CreateToken(manager, claims);
-            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            if (userType=="Manager")
+            {
+                var manager= user as Manager;
+                var claims = _managerService.GetTitle(manager);
+                var accessToken = _tokenHelper.CreateToken(user, claims);
+                return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            }
+            else if (userType == "Parent")
+            {
+                var claims = new List<Title>
+                {
+                    new Title
+                    {
+                        Id = 1,
+                        TitleName = "Parent"
+                    }
+                };
+                var accessToken = _tokenHelper.CreateToken(user, claims);
+                return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            }
+
+            return new ErrorDataResult<AccessToken>();
         }
 
     }

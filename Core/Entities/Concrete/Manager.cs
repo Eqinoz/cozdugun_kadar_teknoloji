@@ -1,6 +1,6 @@
 ﻿namespace Core.Entities.Concrete
 {
-    public class Manager:IEntity
+    public class Manager:IEntity,IAuth
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
