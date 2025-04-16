@@ -33,7 +33,7 @@ namespace Business.Concrete
 
         public IDataResult<Manager> ManagerRegister(UserForRegisterDto managerForRegisterDto, string password)
         {
-            var emailCheck = UserExists(managerForRegisterDto.Mail, "Manager");
+            var emailCheck = UserExists(managerForRegisterDto.Email, "Manager");
             if (!emailCheck.Success)
             {
                 return new ErrorDataResult<Manager>(emailCheck.Message);
@@ -47,7 +47,7 @@ namespace Business.Concrete
             {
                 FirstName = managerForRegisterDto.FirstName,
                 LastName = managerForRegisterDto.LastName,
-                Email = managerForRegisterDto.Mail,
+                Email = managerForRegisterDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Phone = managerForRegisterDto.Phone,
@@ -84,7 +84,7 @@ namespace Business.Concrete
 
         public IDataResult<Parent> ParentRegister(UserForRegisterDto parentForRegisterDto, string password)
         {
-            var emailCheck = UserExists(parentForRegisterDto.Mail, "Parent");
+            var emailCheck = UserExists(parentForRegisterDto.Email, "Parent");
             if (!emailCheck.Success)
             {
                 return new ErrorDataResult<Parent>(emailCheck.Message);
@@ -96,7 +96,7 @@ namespace Business.Concrete
             {
                 FirstName = parentForRegisterDto.FirstName,
                 LastName = parentForRegisterDto.LastName,
-                Email = parentForRegisterDto.Mail,
+                Email = parentForRegisterDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Phone = parentForRegisterDto.Phone,

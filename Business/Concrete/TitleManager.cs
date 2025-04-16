@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.BusinessAspect.Autofac;
+using Core.Aspects.Autofac.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,6 +20,7 @@ namespace Business.Concrete
         {
             _titleDal = titleDal;
         }
+        [CacheAspect]
         public IDataResult<List<Title>> GetAllTitle()
         {
             var result = _titleDal.GetAll();
@@ -35,7 +38,8 @@ namespace Business.Concrete
             var result = _titleDal.Get(x => x.TitleName == title);
             return new SuccessDataResult<Title>(result);
         }
-
+        [CacheRemoveAspect("ITitleService.Get")]
+        //[SecuredOperation("Admin")]
         public IResult Add(Title title)
         {
             _titleDal.Add(title);
