@@ -12,7 +12,10 @@ namespace Business.Abstract
     public interface IChildService
     {
         IDataResult<List<Child>> GetChild();
+        IDataResult<Child> GetIdChild(int id);
+        IDataResult<List<ChildDetailsDto>> GetChildByParentId(int id);
         IResult Add(Child child);
         IDataResult<List<ChildDetailsDto>> GetChildDetails();
+        IDataResult<ChildDetailsDto> GetChildDetailsById(int id);
     }
 }

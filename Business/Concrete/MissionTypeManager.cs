@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -16,15 +17,16 @@ namespace Business.Concrete
         {
             _missionTypeDal = missionTypeDal;
         }
-        public List<MissionType> GetMissionTypes()
+        public IDataResult<List<MissionType>> GetMissionTypes()
         {
-            return _missionTypeDal.GetAll();
+            var result = _missionTypeDal.GetAll();
+            return new SuccessDataResult<List<MissionType>>(result, "Görev Tipleri Listelendi");
         }
 
-        public MissionType Add(MissionType missionType)
+        public IResult Add(MissionType missionType)
         {
-             _missionTypeDal.Add(missionType);
-            return missionType;
+            _missionTypeDal.Add(missionType);
+             return new SuccessResult("Görev Tipi Eklendi.");
         }
     }
 }

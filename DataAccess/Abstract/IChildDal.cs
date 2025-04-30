@@ -12,5 +12,7 @@ namespace DataAccess.Abstract
     public interface IChildDal:IEntityRepository<Child>
     {
         List<ChildDetailsDto> ChildDetails();
+        ChildDetailsDto GetChildDetailsById(int childId);
+        List<ChildDetailsDto> ChildGetByParentId(int id);
     }
 }

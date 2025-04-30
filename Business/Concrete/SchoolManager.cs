@@ -31,6 +31,13 @@ namespace Business.Concrete
         {
             return new DataResult<School>(_schoolDal.Get(s => s.Id == schoolId), true, Messages.SchoolListed);
         }
+
+        public IDataResult<School> GetByName(string schoolName)
+        {
+            var result = _schoolDal.Get(x => x.SchoolName == schoolName);
+            return new SuccessDataResult<School>(result, "Okul Bilgisi Listelendi");
+        }
+
         [SecuredOperation("school.add,Admin")]
         public IResult Add(School school)
         {

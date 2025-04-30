@@ -39,7 +39,7 @@ namespace Business.Concrete
             return new ErrorDataResult<Parent>();
         }
 
-        //[ValidationAspect(typeof(ParentValidator))]
+        [ValidationAspect(typeof(ParentValidator))]
         public IResult Add(Parent parent)
         {
            

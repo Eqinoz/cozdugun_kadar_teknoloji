@@ -29,12 +29,20 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetName")]
+        public IActionResult Get(string name)
+        {
+            var result = _schoolService.GetByName(name);
+            return Ok(result);
+        }
+
         [HttpPost]
         public IActionResult Post(School school)
         {
             var result = _schoolService.Add(school);
             return Ok(result);
         }
+
     }
     
 }

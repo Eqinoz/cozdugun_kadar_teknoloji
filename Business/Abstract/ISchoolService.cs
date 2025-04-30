@@ -12,6 +12,7 @@ namespace Business.Abstract
     {
         IDataResult<List<School>> GetAll();
         IDataResult<School> GetById(int schoolId);
+        IDataResult<School> GetByName(string schoolName);
         IResult Add(School school);
     }
 }
