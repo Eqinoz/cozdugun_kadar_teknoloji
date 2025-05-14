@@ -7,13 +7,10 @@ using Core.Entities;
 
 namespace Entities.Concrete
 {
-    public class PhotoMission:IEntity
+    public class SchoolLesson:IEntity
     {
         public int Id { get; set; }
-        public int ChildId { get; set; }
-        public int ParentId { get; set; }
-        public string MissionDescription { get; set; }
-        public string ImageUrl { get;set; }
-
+        public int SchoolId { get; set; }
+        public string LessonName { get; set; }
     }
 }

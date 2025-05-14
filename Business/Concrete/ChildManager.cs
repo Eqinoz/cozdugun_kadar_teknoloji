@@ -42,11 +42,11 @@ namespace Business.Concrete
             {
                 if (child.Gender=="girl")
                 {
-                    child.ImageUrl = "https://weefle.fr/assets/img/profile.webp?h=86dcf74a642f5aaf1d466c4789df7ba5";
+                    child.ImageUrl = "https://i.pinimg.com/736x/1a/f4/cd/1af4cd73b5794a1cd0dadfd228adfadf.jpg";
                 }
                 else if (child.Gender=="boy")
                 {
-                    child.ImageUrl = "https://png.pngtree.com/png-clipart/20220615/original/pngtree-kid-student-back-to-school-in-uniform-wear-backpack-png-image_8043401.png";
+                    child.ImageUrl = "https://i.pinimg.com/736x/2c/8c/8f/2c8c8f777f46b24badd3e9050c796ca4.jpg";
 
                 }
             }

@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CktDbContext))]
-    partial class CktDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503194720_newTableDataBase")]
+    partial class newTableDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,20 +227,10 @@ namespace DataAccess.Migrations
                     b.Property<int>("ChildId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("HasTimeLimit")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
                     b.Property<string>("MissionDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MissionDuration")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MissionTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -247,9 +240,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SessionDuration")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("VerifiedDate")
                         .HasColumnType("datetime2");

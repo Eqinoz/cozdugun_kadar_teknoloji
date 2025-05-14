@@ -23,8 +23,17 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<SchoolManager>().As<ISchoolService>();
             builder.RegisterType<EfSchoolDal>().As<ISchoolDal>();
 
+            builder.RegisterType<EfSchoolLessonDal>().As<ISchoolLessonDal>();
+            builder.RegisterType<SchoolLessonManager>().As<ISchoolLessonService>();
+
             builder.RegisterType<MissionTypeManager>().As<IMissionTypeService>();
             builder.RegisterType<EfMissionTypeDal>().As<IMissionTypeDal>();
+
+            builder.RegisterType<PhotoMissionManager>().As<IPhotoMissionService>();
+            builder.RegisterType<EfPhotoMissionDal>().As<IPhotoMissionDal>();
+
+            builder.RegisterType<QuestionMissionManager>().As<IQuestionMissonService>();
+            builder.RegisterType<EfQuestionMission>().As<IQuestionMissionDal>();
 
             builder.RegisterType<ParentManager>().As<IParentService>();
             builder.RegisterType<EfParentDal>().As<IParentDal>();
