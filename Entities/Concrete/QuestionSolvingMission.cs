@@ -15,6 +15,7 @@ namespace Entities.Concrete
         public DateTime AssignedDate { get; set; }
         public DateTime VerifiedDate { get; set; }
         public int SchoolLessonId { get;set; }
+        public short NumberOfQuestion { get; set; }
         public byte SuccessRate { get; set; }
         public uint AllowedTime { get; set; }
         public string Description { get;set; }
