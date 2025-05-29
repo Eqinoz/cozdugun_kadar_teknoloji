@@ -14,5 +14,6 @@ namespace DataAccess.Abstract
         List<PhotoVerificationMissionDto> GetAllMissionDetails();
         List<PhotoVerificationMissionDto> GetMissionDetailsByParentId(int ParentId);
         List<PhotoVerificationMissionDto> GetMissionDetailsByChildId(int ChildId);
+        PhotoVerificationMissionDto GetMissionDetailsById(int missionId);
     }
 }

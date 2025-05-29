@@ -63,6 +63,17 @@ namespace WebApi.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetMissionById")]
+        public IActionResult GetMissionById(int id)
+        {
+            var result = _photoMissionService.GetPhotoMissionById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
         [HttpPost("AddPhotoMission")]
         public IActionResult Add(PhotoVerificationMission mission)

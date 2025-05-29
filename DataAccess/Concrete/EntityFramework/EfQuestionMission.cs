@@ -94,5 +94,33 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+
+        public QuestionSolvingMissionDto GetMissionById(int MissionId)
+        {
+            using (CktDbContext context = new CktDbContext())
+            {
+                var result = (from q in context.QuestionSolvingMissions
+                    join c in context.Children on q.ChildId equals c.Id
+                    join p in context.Parents on q.ParentId equals p.Id
+                    join s in context.SchoolsLessons on q.SchoolLessonId equals s.Id
+                    where q.Id == MissionId
+                    select new QuestionSolvingMissionDto
+                    {
+                        Id = q.Id,
+                        ChildName = c.FirstName,
+                        ParentFirstName = p.FirstName,
+                        ParentLasttName = p.LastName,
+                        AssignedDate = q.AssignedDate,
+                        VerifiedDate = q.VerifiedDate,
+                        SchoolLessonName = s.LessonName,
+                        NumberOfQuestion = q.NumberOfQuestion,
+                        SuccessRate = q.SuccessRate,
+                        AllowedTime = q.AllowedTime,
+                        Description = q.Description,
+                        IsApproved = q.IsApproved
+                    }).FirstOrDefault();
+                return result;
+            }
+        }
     }
 }

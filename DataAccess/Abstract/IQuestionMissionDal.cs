@@ -14,6 +14,7 @@ namespace DataAccess.Abstract
         List<QuestionSolvingMissionDto> GetAllMissionDetails();
         List<QuestionSolvingMissionDto> GetMissionDetailsByParentId(int ParentId);
         List<QuestionSolvingMissionDto> GetMissionDetailsByChildId(int  ChildId);
+        QuestionSolvingMissionDto GetMissionById(int MissionId);
 
     }
 }

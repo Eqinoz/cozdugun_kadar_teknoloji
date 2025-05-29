@@ -97,5 +97,33 @@ namespace DataAccess.Concrete.EntityFramework
 
             }
         }
+
+        public PhotoVerificationMissionDto GetMissionDetailsById(int missionId)
+        {
+            using (CktDbContext context = new CktDbContext())
+            {
+                var result = (from m in context.PhotoVerificationMissions
+                    join c in context.Children on m.ChildId equals c.Id
+                    join p in context.Parents on m.ParentId equals p.Id
+                    where m.Id == missionId
+                    select new PhotoVerificationMissionDto
+                    {
+                        Id = m.Id,
+                        ChildName = c.FirstName + c.LastName,
+                        ParentFirstName = p.FirstName,
+                        ParentLastName = p.LastName,
+                        AssignedDate = m.AssignedDate,
+                        VerifiedDate = m.VerifiedDate,
+                        MissionTitle = m.MissionTitle,
+                        HasTimeLimit = m.HasTimeLimit,
+                        MissionDuration = m.MissionDuration,
+                        SessionDuration = m.SessionDuration,
+                        MissionDescription = m.MissionDescription,
+                        PhotoUrl = m.PhotoUrl,
+                        IsApproved = m.IsApproved
+                    }).FirstOrDefault();
+                return result;
+            }
+        }
     }
 }

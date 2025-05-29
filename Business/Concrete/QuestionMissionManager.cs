@@ -43,8 +43,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<QuestionSolvingMissionDto>>(result, "Soru Tipi Görevleri Çocuklara Göre Listelendi");
         }
 
+        public IDataResult<QuestionSolvingMissionDto> GetQuestionMissionById(int missionId)
+        {
+            var result = _questionMission.GetMissionById(missionId);
+            return new SuccessDataResult<QuestionSolvingMissionDto>(result, "Id'ye Göre Soru Getirirdi");
+        }
+
         public IResult Add(QuestionSolvingMission questionMission)
         {
+            questionMission.AssignedDate= DateTime.Now;
+            questionMission.IsApproved=true;
+
             _questionMission.Add(questionMission);
             return new SuccessResult("Soru Tipi Görev Eklendi");
         }

@@ -62,6 +62,18 @@ namespace WebApi.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetDetailsByMissionId")]
+        public IActionResult GetDetailsByMissionId(int id)
+        {
+            var result = _questionMissonService.GetQuestionMissionById(id);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
         [HttpPost("Add")]
         public IActionResult Add(QuestionSolvingMission mission)
         {

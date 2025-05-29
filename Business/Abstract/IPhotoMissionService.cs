@@ -15,6 +15,7 @@ namespace Business.Abstract
         IDataResult<List<PhotoVerificationMissionDto>> GetAllPhotoMissonDetails();
         IDataResult<List<PhotoVerificationMissionDto>> GetPhotoMissionByParentId(int parentId);
         IDataResult<List<PhotoVerificationMissionDto>> GetPhotoMissionByChildId(int childId);
+        IDataResult<PhotoVerificationMissionDto> GetPhotoMissionById(int missionId);
 
         IResult Add(PhotoVerificationMission photoMission);
     }
