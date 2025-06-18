@@ -17,7 +17,7 @@ namespace Entities.Concrete
         public int SchoolLessonId { get;set; }
         public short NumberOfQuestion { get; set; }
         public byte SuccessRate { get; set; }
-        public uint AllowedTime { get; set; }
+        public int AllowedTime { get; set; }
         public string Description { get;set; }
         public bool IsApproved { get; set; }
     }

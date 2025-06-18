@@ -17,5 +17,7 @@ namespace Business.Abstract
         IResult Add(Child child);
         IDataResult<List<ChildDetailsDto>> GetChildDetails();
         IDataResult<ChildDetailsDto> GetChildDetailsById(int id);
+
+        IResult AddUsageTime(int usageTime, int id);
     }
 }

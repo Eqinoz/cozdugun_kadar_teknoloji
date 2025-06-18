@@ -13,6 +13,7 @@ using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi
@@ -92,8 +93,12 @@ namespace WebApi
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                
             }
 
+            app.UseStaticFiles();
+
+            app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAngularDev");

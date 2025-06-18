@@ -14,10 +14,12 @@ namespace Business.Concrete
     public class QuestionMissionManager:IQuestionMissonService
     {
         private IQuestionMissionDal _questionMission;
+        IChildService _childService;
 
-        public QuestionMissionManager(IQuestionMissionDal questionMission)
+        public QuestionMissionManager(IQuestionMissionDal questionMission, IChildService childService)
         {
-            _questionMission=questionMission;
+            _questionMission = questionMission;
+            _childService = childService;
         }
         public IDataResult<List<QuestionSolvingMission>> GetQuestionSolvingMissions()
         {
@@ -49,10 +51,19 @@ namespace Business.Concrete
             return new SuccessDataResult<QuestionSolvingMissionDto>(result, "Id'ye Göre Soru Getirirdi");
         }
 
+        public IResult UpdateMission(int id)
+        {
+            var result = _questionMission.Get(x => x.Id == id);
+            result.IsApproved = true;
+            _questionMission.Update(result);
+            _childService.AddUsageTime(result.AllowedTime, result.ChildId);
+            return new SuccessResult("Görev Durumu Değişti");
+        }
+
         public IResult Add(QuestionSolvingMission questionMission)
         {
             questionMission.AssignedDate= DateTime.Now;
-            questionMission.IsApproved=true;
+            questionMission.IsApproved=false;
 
             _questionMission.Add(questionMission);
             return new SuccessResult("Soru Tipi Görev Eklendi");

@@ -17,6 +17,9 @@ namespace Business.Abstract
         IDataResult<List<PhotoVerificationMissionDto>> GetPhotoMissionByChildId(int childId);
         IDataResult<PhotoVerificationMissionDto> GetPhotoMissionById(int missionId);
 
+        IResult UpdateMission(int id);
+        IResult UpdateSuccess(int id);
+
         IResult Add(PhotoVerificationMission photoMission);
     }
 }

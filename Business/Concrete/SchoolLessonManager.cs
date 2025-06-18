@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.BusinessAspect.Autofac;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -42,7 +45,7 @@ namespace Business.Concrete
             var result = _schoolLesson.GetLessonBySchoolName(schoolName);
             return new SuccessDataResult<List<SchoolLessonDto>>(result, "Ders Detail Listelendi");
         }
-
+        //[SecuredOperation("Admin")]
         public IResult Add(SchoolLesson lesson)
         {
             _schoolLesson.Add(lesson);

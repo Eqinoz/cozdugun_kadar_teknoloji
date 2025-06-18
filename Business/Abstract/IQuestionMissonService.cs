@@ -17,6 +17,8 @@ namespace Business.Abstract
         IDataResult<List<QuestionSolvingMissionDto>> GetQuestionMissionByChildId(int childId);
         IDataResult<QuestionSolvingMissionDto> GetQuestionMissionById(int missionId);
 
+        IResult UpdateMission(int id);
+
         IResult Add(QuestionSolvingMission questionMission);
     }
 }

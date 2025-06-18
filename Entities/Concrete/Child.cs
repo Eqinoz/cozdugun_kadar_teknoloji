@@ -16,5 +16,7 @@ namespace Entities.Concrete
         public int ParentId { get; set; }
         public int SchoolsId { get; set; }
         public string ImageUrl { get; set; }
+        public int UsageTime { get; set; } = 0;
+        public bool UseAuthorization { get; set; }=false;
     }
 }

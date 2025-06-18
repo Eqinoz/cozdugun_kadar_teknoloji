@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CktDbContext))]
-    partial class CktDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250529213826_missionCompletionDb")]
+    partial class missionCompletionDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,12 +158,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("SchoolsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsageTime")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("UseAuthorization")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Children");
@@ -244,12 +241,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("MissionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SessionDuration")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Success")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("PhotoVerificationCompletionMissions");
@@ -295,9 +286,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("SessionDuration")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Success")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("VerifiedDate")
                         .HasColumnType("datetime2");
 
@@ -314,8 +302,8 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AllowedTime")
-                        .HasColumnType("int");
+                    b.Property<long>("AllowedTime")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("AssignedDate")
                         .HasColumnType("datetime2");

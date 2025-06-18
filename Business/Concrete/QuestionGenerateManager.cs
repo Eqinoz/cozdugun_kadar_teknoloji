@@ -20,10 +20,10 @@ namespace Business.Concrete
     public class QuestionGenerateManager : IQuestionGenerateService
     {
         private IQuestionGenerateDal _generateDal;
-        private readonly string _apiKey = "AIzaSyAD3QXF_NMvP8uWHO8INLmsdcFQ7nEujYI"; // API anahtarınızı buraya güvenli bir şekilde ekleyin
+        private readonly string _apiKey = "AIzaSyAD3QXF_NMvP8uWHO8INLmsdcFQ7nEujYI"; // API anahtarını google cloud
         private readonly HttpClient _httpClient;
-        private const string _baseUrl = "https://generativelanguage.googleapis.com/v1beta"; // Düzeltilmiş baseUrl
-        private const string _modelName = "gemini-2.0-flash"; // İhtiyaca göre modeli değiştirebilirsiniz
+        private const string _baseUrl = "https://generativelanguage.googleapis.com/v1beta"; //baseUrl, api haberleşme
+        private const string _modelName = "gemini-2.0-flash"; // model türü, pro ücretli
 
         public QuestionGenerateManager(IQuestionGenerateDal generateDal)
         {
@@ -34,10 +34,10 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Question>>> QuestionCreate(QuestionSolvingMissionDto questionMission)
         {
-            // Burada questionMission içeriğini prompt olarak kullanabilirsin,
-            // ya da sabit örnek prompt
+            
+            //sabit prompt
             string prompt = $@"
-                {questionMission.NumberOfQuestion} tane {questionMission.SchoolLessonName} sorusu üret.
+                {questionMission.NumberOfQuestion} tane,{questionMission.EducationStatu} seviyesinde, {questionMission.SchoolLessonName} sorusu üret.
                 Format:
                 [
                   {{
@@ -96,7 +96,7 @@ namespace Business.Concrete
             // code block içindeki ```json ... ``` kısmını temizle
             string cleanJson = CleanCodeBlock(textWithCodeBlock);
 
-            // Son olarak cleanJson'u deserialize et
+            // cleanJson'u deserialize et
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true

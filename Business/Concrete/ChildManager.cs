@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -35,7 +37,7 @@ namespace Business.Concrete
             var result = _child.ChildGetByParentId(id);
             return new SuccessDataResult<List<ChildDetailsDto>>(result, "Ebevenynin Çocukları Listelendi");
         }
-
+        [ValidationAspect(typeof(ChildValidator))]
         public IResult Add(Child child)
         {
             if (child.ImageUrl == null)
@@ -64,6 +66,22 @@ namespace Business.Concrete
         {
             var result = _child.GetChildDetailsById(id);
             return new SuccessDataResult<ChildDetailsDto>(result,"Başarılı");
+        }
+
+        public IResult AddUsageTime(int usageTime, int id)
+        {
+            var result = _child.Get(x=> x.Id==id);
+            result.UsageTime = usageTime;
+            if (usageTime==0)
+            {
+                result.UseAuthorization=false;
+            }
+            else
+            {
+                result.UseAuthorization = true;
+            }
+            _child.Update(result);
+            return new SuccessResult("Oturum Süresi Eklendi");
         }
     }
 }

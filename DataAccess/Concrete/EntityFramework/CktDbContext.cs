@@ -29,5 +29,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<SchoolLesson> SchoolsLessons { get; set; }
         public DbSet<QuestionSolvingMission> QuestionSolvingMissions { get; set; }
         public DbSet<PhotoVerificationMission> PhotoVerificationMissions { get; set; }
+        public DbSet<PhotoVerificationCompletion> PhotoVerificationCompletionMissions { get;set; }
     }
 }

@@ -29,7 +29,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLastName = p.LastName,
                         Gender = c.Gender,
                         EducationStatu = s.SchoolName,
-                        ImageUrl = c.ImageUrl
+                        ImageUrl = c.ImageUrl,
+                        UsageTime = c.UsageTime,
+                        UseAuthorization = c.UseAuthorization
                     };
                 
                 return result.ToList();
@@ -54,7 +56,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLastName = p.LastName,
                         Gender = c.Gender,
                         EducationStatu = s.SchoolName,
-                        ImageUrl = c.ImageUrl
+                        ImageUrl = c.ImageUrl,
+                        UsageTime = c.UsageTime,
+                        UseAuthorization = c.UseAuthorization
                     }).FirstOrDefault();
 
                 return result;
@@ -78,7 +82,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLastName = p.LastName,
                         Gender = c.Gender,
                         EducationStatu = s.SchoolName,
-                        ImageUrl = c.ImageUrl
+                        ImageUrl = c.ImageUrl,
+                        UsageTime = c.UsageTime,
+                        UseAuthorization = c.UseAuthorization
                     };
                 return result.ToList();
             }

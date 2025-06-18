@@ -21,6 +21,7 @@ namespace Entities.DTOs
         public int SessionDuration { get; set; }
         public string MissionDescription { get; set; }
         public string? PhotoUrl { get; set; }
+        public bool Success { get; set; }
         public bool IsApproved { get; set; }
     }
 }

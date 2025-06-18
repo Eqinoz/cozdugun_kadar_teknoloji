@@ -53,6 +53,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<QuestionGenerateManager>().As<IQuestionGenerateService>();
             builder.RegisterType<EfQuestionGenerateDal>().As<IQuestionGenerateDal>();
 
+            builder.RegisterType<PhotoMissionCompletionManager>().As<IPhotoMissionCompletionService>();
+            builder.RegisterType<EfPhotoMissionCompletionDal>().As<IPhotoMissionCompletionDal>();
+
             
             
 

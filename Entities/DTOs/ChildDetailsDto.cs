@@ -18,5 +18,7 @@ namespace Entities.DTOs
         public string ParentLastName { get; set; }
         public string EducationStatu { get; set; }
         public string ImageUrl { get; set; }
+        public int UsageTime { get; set; } = 0;
+        public bool UseAuthorization { get; set; } = false;
     }
 }

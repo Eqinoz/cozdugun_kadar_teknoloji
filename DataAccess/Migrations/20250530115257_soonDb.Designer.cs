@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CktDbContext))]
-    partial class CktDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250530115257_soonDb")]
+    partial class soonDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,9 +250,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("SessionDuration")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Success")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("PhotoVerificationCompletionMissions");
@@ -294,9 +294,6 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("SessionDuration")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Success")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("VerifiedDate")
                         .HasColumnType("datetime2");

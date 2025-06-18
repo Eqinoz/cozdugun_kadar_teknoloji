@@ -85,5 +85,27 @@ namespace WebApi.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("Update")]
+        public IActionResult Update(int id)
+        {
+            var result = _photoMissionService.UpdateMission(id);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("UploadMissionSuccess")]
+        public IActionResult UploadMissionSuccess(int id)
+        {
+            var result = _photoMissionService.UpdateSuccess(id);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

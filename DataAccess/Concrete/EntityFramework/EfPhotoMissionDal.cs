@@ -33,12 +33,15 @@ namespace DataAccess.Concrete.EntityFramework
                         SessionDuration = m.SessionDuration,
                         MissionDescription = m.MissionDescription,
                         PhotoUrl = m.PhotoUrl,
+                        Success = m.Success,
                         IsApproved = m.IsApproved
                     };
                 return result.ToList();
 
             }
         }
+
+        
 
         public List<PhotoVerificationMissionDto> GetMissionDetailsByParentId(int ParentId)
         {
@@ -62,6 +65,7 @@ namespace DataAccess.Concrete.EntityFramework
                         SessionDuration = m.SessionDuration,
                         MissionDescription = m.MissionDescription,
                         PhotoUrl = m.PhotoUrl,
+                        Success = m.Success,
                         IsApproved = m.IsApproved
                     };
                 return result.ToList();
@@ -91,6 +95,7 @@ namespace DataAccess.Concrete.EntityFramework
                         SessionDuration = m.SessionDuration,
                         MissionDescription = m.MissionDescription,
                         PhotoUrl = m.PhotoUrl,
+                        Success = m.Success,
                         IsApproved = m.IsApproved
                     };
                 return result.ToList();
@@ -120,6 +125,7 @@ namespace DataAccess.Concrete.EntityFramework
                         SessionDuration = m.SessionDuration,
                         MissionDescription = m.MissionDescription,
                         PhotoUrl = m.PhotoUrl,
+                        Success = m.Success,
                         IsApproved = m.IsApproved
                     }).FirstOrDefault();
                 return result;

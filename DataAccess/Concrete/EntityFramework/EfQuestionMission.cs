@@ -19,7 +19,8 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from q in context.QuestionSolvingMissions
                     join c in context.Children on q.ChildId equals c.Id
                     join p in context.Parents on q.ParentId equals p.Id
-                    join s in context.SchoolsLessons on q.SchoolLessonId equals s.Id
+                    join sl in context.SchoolsLessons on q.SchoolLessonId equals sl.Id
+                    join s in context.Schools on c.SchoolsId equals s.Id 
                     select new QuestionSolvingMissionDto
                     {
                         Id = q.Id,
@@ -28,8 +29,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLasttName = p.LastName,
                         AssignedDate = q.AssignedDate,
                         VerifiedDate = q.VerifiedDate,
-                        SchoolLessonName = s.LessonName,
+                        SchoolLessonName = sl.LessonName,
                         NumberOfQuestion = q.NumberOfQuestion,
+                        EducationStatu = s.SchoolName,
                         SuccessRate = q.SuccessRate,
                         AllowedTime = q.AllowedTime,
                         Description = q.Description,
@@ -46,7 +48,8 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from q in context.QuestionSolvingMissions
                     join c in context.Children on q.ChildId equals c.Id
                     join p in context.Parents on q.ParentId equals p.Id
-                    join s in context.SchoolsLessons on q.SchoolLessonId equals s.Id
+                    join sl in context.SchoolsLessons on q.SchoolLessonId equals sl.Id
+                    join s in context.Schools on c.SchoolsId equals s.Id
                              where p.Id == ParentId
                     select new QuestionSolvingMissionDto
                     {
@@ -56,8 +59,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLasttName = p.LastName,
                         AssignedDate = q.AssignedDate,
                         VerifiedDate = q.VerifiedDate,
-                        SchoolLessonName = s.LessonName,
+                        SchoolLessonName = sl.LessonName,
                         NumberOfQuestion = q.NumberOfQuestion,
+                        EducationStatu = s.SchoolName,
                         SuccessRate = q.SuccessRate,
                         AllowedTime = q.AllowedTime,
                         Description = q.Description,
@@ -74,8 +78,9 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from q in context.QuestionSolvingMissions
                     join c in context.Children on q.ChildId equals c.Id
                     join p in context.Parents on q.ParentId equals p.Id
-                    join s in context.SchoolsLessons on q.SchoolLessonId equals s.Id
-                    where c.Id == ChildId
+                    join sl in context.SchoolsLessons on q.SchoolLessonId equals sl.Id
+                    join s in context.Schools on c.SchoolsId equals s.Id
+                             where c.Id == ChildId
                     select new QuestionSolvingMissionDto
                     {
                         Id = q.Id,
@@ -84,8 +89,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLasttName = p.LastName,
                         AssignedDate = q.AssignedDate,
                         VerifiedDate = q.VerifiedDate,
-                        SchoolLessonName = s.LessonName,
+                        SchoolLessonName = sl.LessonName,
                         NumberOfQuestion = q.NumberOfQuestion,
+                        EducationStatu = s.SchoolName,
                         SuccessRate = q.SuccessRate,
                         AllowedTime = q.AllowedTime,
                         Description = q.Description,
@@ -102,8 +108,9 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = (from q in context.QuestionSolvingMissions
                     join c in context.Children on q.ChildId equals c.Id
                     join p in context.Parents on q.ParentId equals p.Id
-                    join s in context.SchoolsLessons on q.SchoolLessonId equals s.Id
-                    where q.Id == MissionId
+                    join sl in context.SchoolsLessons on q.SchoolLessonId equals sl.Id
+                    join s in context.Schools on c.SchoolsId equals s.Id
+                              where q.Id == MissionId
                     select new QuestionSolvingMissionDto
                     {
                         Id = q.Id,
@@ -112,8 +119,9 @@ namespace DataAccess.Concrete.EntityFramework
                         ParentLasttName = p.LastName,
                         AssignedDate = q.AssignedDate,
                         VerifiedDate = q.VerifiedDate,
-                        SchoolLessonName = s.LessonName,
+                        SchoolLessonName = sl.LessonName,
                         NumberOfQuestion = q.NumberOfQuestion,
+                        EducationStatu = s.SchoolName,
                         SuccessRate = q.SuccessRate,
                         AllowedTime = q.AllowedTime,
                         Description = q.Description,

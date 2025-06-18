@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
@@ -14,10 +15,12 @@ namespace Business.Concrete
     public class PhotoMissionManager:IPhotoMissionService
     {
         private IPhotoMissionDal _photoMission;
+        private IChildService _childService;
 
-        public PhotoMissionManager(IPhotoMissionDal photoMission)
+        public PhotoMissionManager(IPhotoMissionDal photoMission, IChildService childService)
         {
             _photoMission=photoMission;
+            _childService=childService;
         }
         public IDataResult<List<PhotoVerificationMission>> GetAllPhotoMissions()
         {
@@ -50,14 +53,32 @@ namespace Business.Concrete
         {
             var result = _photoMission.GetMissionDetailsById(missionId);
             return new SuccessDataResult<PhotoVerificationMissionDto>(result,
-                "Görev İd'sine Görev Görev Detayları Getilirdi");
+                "Görev İd'sine Göre Görev Detayları Getilirdi");
+        }
+
+        public IResult UpdateMission(int id)
+        {
+            var result = _photoMission.Get(x=>x.Id==id);
+            result.IsApproved = true;
+             _photoMission.Update(result);
+             _childService.AddUsageTime(result.SessionDuration, result.ChildId);
+            return new SuccessResult("Görev Durumu Değişti");
+        }
+
+        public IResult UpdateSuccess(int id)
+        {
+            var result = _photoMission.Get(x => x.Id == id);
+            result.Success = true;
+            _photoMission.Update(result);
+            return new SuccessResult("Onay Durumu Değişti");
         }
 
         public IResult Add(PhotoVerificationMission photoMission)
         {
             photoMission.AssignedDate = DateTime.Now;
             photoMission.PhotoUrl = "";
-            photoMission.IsApproved=true;
+            photoMission.IsApproved=false;
+            photoMission.Success = false;
 
             _photoMission.Add(photoMission);
             return new SuccessResult("Fotoğraflı Görev Başarıyla Eklendi");
